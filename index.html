@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pay2Mate</title>
+<style>
+:root{--bg:#F4F5FA;--card:#fff;--ink:#17163A;--mut:#5B5F7E;--line:#E2E4F0;--pos:#0A7D5E;--neg:#C93A25;--brand:#5B3DF5;--on:#fff;--soft:#ECE8FF;--sun:#FFC53D;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E0F24;--card:#1A1B3A;--ink:#EEEFFA;--mut:#A6A9CC;--line:#2B2D55;--pos:#3DD6A8;--neg:#FF8068;--brand:#A99BFF;--on:#0E0F24;--soft:#2A2760;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E0F24;--card:#1A1B3A;--ink:#EEEFFA;--mut:#A6A9CC;--line:#2B2D55;--pos:#3DD6A8;--neg:#FF8068;--brand:#A99BFF;--on:#0E0F24;--soft:#2A2760;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 ui-rounded,"SF Pro Rounded",Nunito,system-ui,-apple-system,"Segoe UI",sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+main{max-width:480px;margin:0 auto;padding:16px 16px 104px}
+h1{font-size:26px;margin:4px 0 2px;letter-spacing:-.02em}
+h2{font-size:16px;margin:0 0 8px}
+p{margin:0 0 8px}
+ul{padding-left:18px;margin:4px 0}li{margin:5px 0}
+.m{color:var(--mut);font-size:13px}.pos{color:var(--pos)}.neg{color:var(--neg)}
+.c{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:0 0 12px}
+.hero{background:var(--brand);color:var(--on);border:0}
+.m2{opacity:.9;font-size:14px}
+.big{font-size:42px;font-weight:800;letter-spacing:-.03em;line-height:1.1;margin:2px 0 10px}
+.pill{display:inline-flex;align-items:center;gap:6px;background:rgba(0,0,0,.16);border-radius:99px;padding:4px 10px 4px 4px;font-size:13px;margin:0 6px 8px 0}
+.pill .av{width:24px;height:24px;font-size:12px}
+.av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;flex:none}
+.r{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.r>div{flex:1;min-width:0}
+.ic{font-size:22px;width:34px;text-align:center;flex:none}
+.dot{width:12px;height:12px;border-radius:50%;flex:none}
+.bar{display:flex;height:12px;border-radius:99px;overflow:hidden;background:var(--line);margin:0 0 8px}
+.bar i{display:block;height:100%}
+.cb{margin:0 0 10px}.cl{display:flex;justify-content:space-between;font-size:14px;margin:0 0 4px}
+.b{display:block;width:100%;background:var(--brand);color:var(--on);border:0;border-radius:12px;padding:14px 16px;font:inherit;font-weight:700;cursor:pointer}
+.b.s{background:var(--soft);color:var(--brand)}
+.b.y{background:var(--sun);color:#17163A}
+.b+.b{margin-top:8px}
+label{display:block;font-size:13px;color:var(--mut);margin:0 0 12px}
+input,select{display:block;width:100%;font:inherit;color:var(--ink);padding:11px 12px;margin-top:5px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+input[type=range]{padding:0;border:0;background:none;accent-color:var(--brand)}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.lb{font-size:13px;color:var(--mut);margin:0 0 6px}
+.chs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.ch{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:8px 14px;font:inherit;font-size:14px;cursor:pointer}
+.ch.on{background:var(--brand);color:var(--on);border-color:var(--brand);font-weight:700}
+.seg{display:flex;background:var(--soft);border-radius:12px;padding:3px;margin:0 0 12px}
+.seg button{flex:1;border:0;background:none;padding:9px;border-radius:10px;font:inherit;font-size:14px;color:var(--mut);cursor:pointer}
+.seg button.on{background:var(--card);color:var(--ink);font-weight:700}
+.warn{border-left:4px solid var(--sun)}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+nav div{display:flex;max-width:480px;margin:0 auto}
+nav button{flex:1;background:none;border:0;padding:9px 0 8px;color:var(--mut);font:inherit;font-size:12px;display:grid;justify-items:center;gap:1px;cursor:pointer}
+nav button.on{color:var(--brand);font-weight:700}
+nav i{font-style:normal;font-size:21px}
+.sh{position:fixed;inset:0;background:rgba(10,12,30,.55);display:flex;align-items:flex-end;justify-content:center;z-index:20}
+.sh[hidden]{display:none}
+.sh>div{background:var(--card);width:100%;max-width:480px;border-radius:20px 20px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom,0px))}
+.ts{position:fixed;left:50%;bottom:calc(78px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);background:var(--ink);color:var(--bg);padding:10px 14px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:.2s;width:max-content;max-width:90%;z-index:30}
+.ts.show{opacity:1;transform:translate(-50%,0)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main id="v"></main>
+<nav><div>
+<button data-t="home" onclick="go('home')"><i>🏠</i>Home</button>
+<button data-t="add" onclick="go('add')"><i>➕</i>Add</button>
+<button data-t="pay" onclick="go('pay')"><i>💸</i>Pay</button>
+<button data-t="plan" onclick="go('plan')"><i>📊</i>Plan</button>
+<button data-t="pitch" onclick="go('pitch')"><i>💡</i>Pitch</button>
+</div></nav>
+<div id="sht" class="sh" hidden></div>
+<div id="ts" class="ts" role="status"></div>
+<script>
+const P=[{n:'You',c:'#5B3DF5',inc:2400},{n:'Sam',c:'#D9730D',inc:1800},{n:'Alex',c:'#0E9F78',inc:2000},{n:'Jo',c:'#D8397A',inc:1600}],
+TI=P.reduce((s,p)=>s+p.inc,0),CAT={Rent:'🏠',Groceries:'🛒',Utilities:'💡',Internet:'📶',Other:'🧾'};
+let X=[],uid=1,tab='home',seg='why',inc=2400,pu=800,sheet=null,pay={to:null,amt:''},pot={saved:400,goal:2000,m:200},f={t:'',a:'',cat:'Groceries',by:0,who:[0,1,2,3],mode:'eq'};
+const $=n=>'$'+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}),
+esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),
+av=i=>`<span class="av" style="background:${P[i].c}">${P[i].n[0]}</span>`,
+r2=v=>Math.round(v*100)/100,q=id=>document.getElementById(id);
+
+function shares(a,who,mode){const o=P.map(()=>0);if(!who.length)return o;const w=who.map(i=>mode=='inc'?P[i].inc:1),T=w.reduce((x,y)=>x+y,0);let s=0;who.forEach((p,k)=>{o[p]=r2(a*w[k]/T);s+=o[p]});o[who[0]]=r2(o[who[0]]+a-s);return o}
+function add(t,cat,a,by,who,mode,type){X.unshift({t,cat,a,by,s:shares(a,who,mode),type:type||'exp'});uid++}
+function nets(){const n=P.map(()=>0);X.forEach(e=>{n[e.by]+=e.a;e.s.forEach((v,i)=>n[i]-=v)});return n.map(r2)}
+function plan(){const n=nets(),d=[],c=[],t=[];n.forEach((v,i)=>{if(v<-.004)d.push([i,-v]);else if(v>.004)c.push([i,v])});
+d.sort((a,b)=>b[1]-a[1]);c.sort((a,b)=>b[1]-a[1]);let i=0,j=0;
+while(i<d.length&&j<c.length){const m=Math.min(d[i][1],c[j][1]);t.push({f:d[i][0],t:c[j][0],a:r2(m)});d[i][1]-=m;c[j][1]-=m;if(d[i][1]<.005)i++;if(c[j][1]<.005)j++}return t}
+
+add('Rent – October','Rent',1800,1,[0,1,2,3],'inc');
+add('Groceries','Groceries',86.4,2,[0,1,2,3],'eq');
+add('Electricity','Utilities',64,3,[0,1,2,3],'eq');
+add('Wi-Fi','Internet',40,1,[0,1,2,3],'eq');
+
+function R(){q('v').innerHTML=({home:H,add:A,pay:Y,plan:L,pitch:T})[tab]();
+document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t==tab));
+if(tab=='add')pv();if(tab=='plan')pl();if(tab=='pitch'&&seg=='biz')be()}
+function go(t){tab=t;R();scrollTo(0,0)}
+function toast(m){const t=q('ts');t.textContent=m;t.classList.add('show');clearTimeout(window._t);window._t=setTimeout(()=>t.classList.remove('show'),2800)}
+
+function H(){const n=nets(),me=n[0],ex=X.filter(e=>e.type=='exp'),tot=ex.reduce((s,e)=>s+e.a,0),cats={};
+ex.forEach(e=>cats[e.cat]=(cats[e.cat]||0)+e.a);
+return `<h1>Pay2Mate</h1><p class="m">Shared money, sorted. Oak Street flat, 4 roommates.</p>
+<div class="c hero"><div class="m2">${me>.004?'You’re owed':me<-.004?'You owe':'You’re all settled up'}</div><div class="big">${$(me)}</div>
+<div>${P.map((p,i)=>i?`<span class="pill">${av(i)}${p.n} ${n[i]>=0?'+':'−'}${$(n[i])}</span>`:'').join('')}</div>
+<button class="b y" onclick="go('pay')">Settle up</button></div>
+<div class="c"><h2>Spending this month: ${$(tot)}</h2>${Object.keys(cats).map(k=>`<div class="cb"><div class="cl"><span>${CAT[k]} ${k}</span><b>${$(cats[k])}</b></div><div class="bar"><i style="width:${cats[k]/tot*100}%;background:var(--brand)"></i></div></div>`).join('')}</div>
+<div class="c"><h2>Recent activity</h2>${X.slice(0,5).map(e=>`<div class="r"><span class="ic">${e.type=='pay'?'💸':CAT[e.cat]}</span><div>${esc(e.t)}<div class="m">${e.type=='pay'?'Sent by '+P[e.by].n:'Paid by '+P[e.by].n+', your share '+$(e.s[0])}</div></div><b>${$(e.a)}</b></div>`).join('')}</div>`}
+
+function A(){return `<h1>Add expense</h1><p class="m">Enter a bill and see every share instantly.</p>
+<div class="c"><label>What was it for?<input value="${esc(f.t)}" oninput="f.t=this.value" placeholder="e.g. Weekly groceries"></label>
+<label>Amount ($)<input type="number" inputmode="decimal" min="0" step="0.01" value="${f.a}" oninput="f.a=this.value;pv()" placeholder="0.00"></label>
+<label>Category<select onchange="f.cat=this.value">${Object.keys(CAT).map(k=>`<option ${k==f.cat?'selected':''}>${k}</option>`).join('')}</select></label>
+<label>Paid by<select onchange="f.by=+this.value;pv()">${P.map((p,i)=>`<option value="${i}" ${i==f.by?'selected':''}>${p.n}</option>`).join('')}</select></label>
+<div class="lb">Split between</div><div class="chs">${P.map((p,i)=>`<button class="ch ${f.who.includes(i)?'on':''}" onclick="tg(${i})">${p.n}</button>`).join('')}</div>
+<div class="lb">How to split</div><div class="seg"><button class="${f.mode=='eq'?'on':''}" onclick="f.mode='eq';R()">Equal</button><button class="${f.mode=='inc'?'on':''}" onclick="f.mode='inc';R()">By income</button></div>
+<p class="m">${f.mode=='inc'?'Fair share: people who earn more cover a bigger part, so the cost feels the same relative to income. Best for rent.':'Everyone pays the same. Best for small things like snacks.'}</p>
+<div id="pvw"></div></div><button class="b" onclick="addX()">Add expense</button>`}
+function tg(i){f.who=f.who.includes(i)?f.who.filter(x=>x!=i):[...f.who,i].sort();R()}
+function pv(){const e=q('pvw');if(!e)return;const a=parseFloat(f.a)||0;
+if(!a||!f.who.length){e.innerHTML='<p class="m">Enter an amount and pick at least one person.</p>';return}
+const s=shares(a,f.who,f.mode);
+e.innerHTML=`<div class="bar" style="height:16px">${f.who.map(i=>`<i style="width:${s[i]/a*100}%;background:${P[i].c}"></i>`).join('')}</div>`+f.who.map(i=>`<div class="r">${av(i)}<div>${P[i].n}${i==f.by?' (paid)':''}<div class="m">${Math.round(s[i]/a*100)}% of the bill</div></div><b>${$(s[i])}</b></div>`).join('')}
+function addX(){const a=parseFloat(f.a);if(!f.t.trim()||!(a>0)||!f.who.length){toast('Add a name, an amount above $0, and at least one person.');return}
+add(f.t.trim(),f.cat,r2(a),f.by,f.who,f.mode);f.t='';f.a='';go('home');toast('Expense added. Balances updated.')}
+
+function Y(){const t=plan(),mine=t.filter(x=>x.f==0);
+return `<h1>Pay a roommate</h1><p class="m">Send what you owe in a few taps. Demo only: no real money moves.</p>
+${mine.length?mine.map(x=>`<div class="c hero"><div class="m2">You owe ${P[x.t].n}</div><div class="big">${$(x.a)}</div><button class="b y" onclick="ask(${x.t},${x.a})">Pay ${P[x.t].n} ${$(x.a)}</button></div>`).join(''):`<div class="c"><h2>You’re all settled up 🎉</h2><p class="m">Nobody is waiting on a payment from you.</p></div>`}
+<div class="c"><h2>Send any amount</h2><div class="chs">${P.map((p,i)=>i?`<button class="ch ${pay.to==i?'on':''}" onclick="pay.to=${i};R()">${p.n}</button>`:'').join('')}</div>
+<label>Amount ($)<input type="number" inputmode="decimal" min="0" step="0.01" value="${pay.amt}" oninput="pay.amt=this.value" placeholder="0.00"></label>
+<button class="b" onclick="ask(pay.to,parseFloat(pay.amt))">Review payment</button></div>
+<div class="c"><h2>Settle-up plan</h2><p class="m">The fewest payments that clear every balance.</p>${t.length?t.map(x=>`<div class="r">${av(x.f)}<div>${P[x.f].n} pays ${P[x.t].n}</div><b>${$(x.a)}</b></div>`).join(''):'<p class="m">Nothing to settle.</p>'}</div>
+<div class="c warn"><h2>Scam check</h2><p class="m">Only pay people you live with. Pay2Mate never asks for your PIN by message or call.</p></div>`}
+function ask(to,a){if(!to||!(a>0)){toast('Choose a roommate and enter an amount above $0.');return}sheet={to,a:r2(a),err:''};S()}
+function S(){const e=q('sht');if(!sheet){e.hidden=true;return}const s=sheet;e.hidden=false;
+e.innerHTML='<div role="dialog" aria-modal="true">'+(s.done
+?`<h2>Payment sent ✓</h2><div class="r">${av(s.to)}<div>You paid ${P[s.to].n}<div class="m">Receipt P2M-${1000+uid}</div></div><b>${$(s.a)}</b></div><p class="m">Balances are updated. In a real app ${P[s.to].n} would get a notification.</p><button class="b" onclick="sheet=null;S()">Done</button>`
+:`<h2>Confirm payment</h2><div class="r">${av(s.to)}<div>To ${P[s.to].n}<div class="m">Roommate, Oak Street flat</div></div><b>${$(s.a)}</b></div>
+<p class="m">Check the name and the amount. Payments can’t be undone.</p>
+<label>4-digit PIN<input id="pin" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="Demo PIN: 1234"></label>
+<p class="neg">${s.err}</p><button class="b" onclick="send()">Send ${$(s.a)}</button><button class="b s" onclick="sheet=null;S()">Cancel</button>`)+'</div>'}
+function send(){const p=q('pin').value;
+if(sheet.a>2000)sheet.err='Daily limit is $2,000 for new accounts.';
+else if(p!=='1234')sheet.err='Wrong PIN. Use 1234 in this demo.';
+else{add('Payment to '+P[sheet.to].n,'Pay',sheet.a,0,[sheet.to],'eq','pay');sheet.done=1;pay={to:null,amt:''};R()}S()}
+
+function L(){return `<h1>Plan and save</h1><p class="m">Simple rules to spend wisely and save together.</p>
+<div class="c"><h2>Your 50/30/20 budget</h2><label>Monthly take-home income ($)<input type="number" inputmode="decimal" value="${inc}" oninput="inc=parseFloat(this.value)||0;pl()"></label><div id="b5"></div></div>
+<div class="c"><h2>Shared emergency fund</h2><div id="ef"></div><label>Monthly pot contribution, whole house: <b id="pm">${$(pot.m)}</b><input type="range" min="0" max="600" step="10" value="${pot.m}" oninput="pot.m=+this.value;pl()"></label><button class="b s" onclick="pot.saved+=pot.m;pl();toast('Added to the pot.')">Add this month’s contribution</button></div>
+<div class="c"><h2>Smart money tips</h2><ul><li>Pay yourself first: move savings the day you’re paid, before you spend.</li><li>Settle bills early. Late rent can mean fees and lost trust.</li><li>Agree in writing who pays what and when.</li></ul></div>`}
+function pl(){const b=q('b5');if(!b)return;
+const rent=X.filter(e=>e.cat=='Rent'&&e.type=='exp').reduce((s,e)=>s+e.s[0],0),r=inc?rent/inc*100:0,
+pt=[['Needs',.5,'var(--brand)','Rent, food, bills'],['Wants',.3,'var(--sun)','Fun and eating out'],['Savings',.2,'var(--pos)','Emergency fund and goals']];
+b.innerHTML=`<div class="bar" style="height:16px">${pt.map(x=>`<i style="width:${x[1]*100}%;background:${x[2]}"></i>`).join('')}</div>`+pt.map(x=>`<div class="r"><i class="dot" style="background:${x[2]}"></i><div>${x[0]} ${x[1]*100}%<div class="m">${x[3]}</div></div><b>${$(inc*x[1])}</b></div>`).join('')+`<p class="m" style="margin-top:8px">Your rent share is ${$(rent)}, or <b>${r.toFixed(0)}%</b> of your income. ${r>30?'A common guideline is to keep rent under about 30%, so look for ways to cut costs or earn more.':'A common guideline is to keep rent under about 30%, so you are within it.'}</p>`;
+const left=Math.max(0,pot.goal-pot.saved),mo=pot.m?Math.ceil(left/pot.m):0,pc=Math.min(100,pot.saved/pot.goal*100);q('pm').textContent=$(pot.m);
+q('ef').innerHTML=`<div class="cl"><span>${$(pot.saved)} of ${$(pot.goal)} (one month of house costs)</span><b>${Math.round(pc)}%</b></div><div class="bar"><i style="width:${pc}%;background:var(--pos)"></i></div><p class="m">${left==0?'Goal reached! Keep it for real emergencies only.':pot.m?`At ${$(pot.m)} a month you’ll get there in ${mo} month${mo>1?'s':''}. Fair shares by income: ${P.map(p=>p.n+' '+$(pot.m*p.inc/TI)).join(', ')}.`:'Move the slider to set a monthly amount.'}</p>`}
+
+const TX={why:`<div class="c"><h2>The problem</h2><p>Roommates share rent, groceries and bills, but track them in group chats and memory. Someone overpays, someone pays late, and money turns into arguments.</p></div>
+<div class="c"><h2>Our solution</h2><ul><li>Log any shared cost and see exact shares at once.</li><li>Split fairly: equally, or by income for big bills like rent.</li><li>Settle with the fewest payments, then send money in a tap.</li><li>Budget with the 50/30/20 rule and save together in a shared pot.</li></ul></div>
+<div class="c"><h2>Money skills it builds</h2><p>Budgeting, fair (proportional) sharing, emergency funds, paying on time and keeping records.</p></div>`,
+safe:`<div class="c"><h2>Data protection</h2><ul><li>We collect only a name, an email and balances. Never bank passwords.</li><li>Data is encrypted in transit and at rest (planned for launch).</li><li>You can export or delete your data at any time.</li><li>We never sell personal data.</li></ul></div>
+<div class="c"><h2>Scam prevention</h2><ul><li>Every payment needs a PIN and shows a name-and-amount check.</li><li>Only invited roommates can send or request money.</li><li>New accounts have a $2,000 daily limit.</li><li>Pay2Mate never asks for your PIN by message or call.</li></ul></div>
+<div class="c"><h2>Responsible and ethical</h2><ul><li>No loans or credit: we do not push debt.</li><li>Clear fees and no hidden charges.</li><li>Reminders are polite, never shaming.</li><li>This prototype uses demo data. No real money moves.</li></ul></div>`};
+function T(){return `<h1>Pitch</h1><p class="m">Problem, plan and protection for Pay2Mate.</p><div class="seg">${[['why','Why'],['biz','Business'],['safe','Safety']].map(([k,l])=>`<button class="${seg==k?'on':''}" onclick="seg='${k}';R()">${l}</button>`).join('')}</div>`+(seg=='biz'?B():TX[seg])}
+function B(){return `<div class="c"><h2>Startup costs</h2>${[['App development',5000],['Legal and licensing',2000],['Design and branding',1000],['Launch marketing',1500],['Contingency',500]].map(x=>`<div class="r"><div>${x[0]}</div><b>${$(x[1])}</b></div>`).join('')}<div class="r"><div><b>Total</b></div><b>$10,000.00</b></div></div>
+<div class="c"><h2>Revenue model</h2><p>Free plan: one household with all core features.</p><p>Plus: $3.00 per household each month (about $0.75 each for four roommates) for receipt scans, history export and unlimited goals.</p><p class="m">Later: a 1% fee on instant transfers. It is left out of the break-even to stay cautious.</p></div>
+<div class="c"><h2>Break-even</h2><p class="m">Fixed costs are $1,000 a month: hosting and tools $150, part-time support $600, marketing $250. Each paying household costs $0.50 a month to serve.</p><p><b>$1,000 ÷ ($3.00 − $0.50) = 400 households</b></p>
+<label>Paying households: <b id="puv">${pu}</b><input type="range" min="0" max="1200" step="50" value="${pu}" oninput="pu=+this.value;be()"></label><div id="bev"></div></div>`}
+function be(){const e=q('bev');if(!e)return;q('puv').textContent=pu;const r=pu*3,v=pu*.5,p=r-v-1000;
+e.innerHTML=`<div class="r"><div>Revenue</div><b>${$(r)}</b></div><div class="r"><div>Variable costs</div><b>−${$(v)}</b></div><div class="r"><div>Fixed costs</div><b>−$1,000.00</b></div><div class="r"><div><b>Monthly profit</b></div><b class="${p>=0?'pos':'neg'}">${p<0?'−':''}${$(p)}</b></div><p class="m" style="margin-top:8px">${p>0?`The $10,000 startup cost is paid back in ${Math.ceil(10000/p)} months.`:p==0?'Exactly break-even.':'Below break-even: more households are needed.'}</p>`}
+R();
+</script>
+</body>
+</html>
